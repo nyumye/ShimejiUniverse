@@ -1,0 +1,7 @@
+#shimejiSetter{
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    z-index: 10000;
+    width: 10%;
+}
