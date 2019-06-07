@@ -9,10 +9,10 @@ var imgSrc = chrome.extension.getURL(
 
 
 $(document).ready(function(){
-    for (var i = 0; i < 9; i++) {
+    for (var i = 0; i < 20; i++) {
         var img = $('<img>').attr('src', imgSrc).attr('id', 'shimejiSetter');
         $('body').append(img);
-        img.css('left', Math.floor(Math.random(60)*5));
+        img.css('left', Math.floor(Math.random(200)*900));
     }
     
 });
