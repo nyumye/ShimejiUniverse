@@ -16,24 +16,27 @@ function setShimejiSize(img, imgHight, imgWidth){
 
 }
 
-function playPoyo(img, imgHight, imgWidth){
+function playPoyo(img){
     $(img).animate(
         {
-            height: '-=3%'
+            height: '-=30px',
+            width: '+=30px'
         },
         {
             duration: "fast", easing: "linear",
         }
     ).animate(
         {
-            height: '+=6%'
+            height: '+=60px',
+            width: '-=60px'
         },
         {
             duration: "fast", easing: "linear",
         }
     ).animate(
         {
-            height: '-=3%'
+            height: '-=30px',
+            width: '+=30px'
         },
         {
             duration: "fast", easing: "linear",
@@ -64,6 +67,8 @@ $(document).ready(function(){
 
         img.css("bottom", "-10px");
         img.css('left', Math.floor(Math.random(200)*1200));
+        img.mouseover(function(){playPoyo(img)});
+        img.mouseout(function(){playPoyo(img)});
     });
     
 
