@@ -1,10 +1,10 @@
 'use strict';
 
 //高さの下限。pxですよ。これを基に拡大比率を求める。
-var minHeight = 100;
+var minHeight = 80;
 
 //高さの下限にどれだけ数値を足すか。散らばり
-var extraHeight = 90;
+var extraHeight = 60;
 
 //ぽよぽよさせる際にどれだけ圧縮するか
 var changeValueRate = .1;
