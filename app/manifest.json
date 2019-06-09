@@ -16,6 +16,7 @@
             ],
             "js": [
                 "scripts/jQuery/jquery.js",
+                "scripts/jQuery/jquery.easing.1.3.js",
                 "scripts/contentscript.js"
             ],
             "run_at": "document_end",
@@ -25,17 +26,17 @@
     "page_action": {
         "default_popup": "scripts/popup.html",
         "default_icon": {
-            "16": "images/icon/get_started16.png",
-            "32": "images/icon/get_started32.png",
-            "48": "images/icon/get_started48.png",
-            "128": "images/icon/get_started128.png"
+            "16": "images/icon/0.png",
+            "32": "images/icon/0.png",
+            "48": "images/icon/0.png",
+            "128": "images/icon/0.png"
         }
     },
     "icons": {
-        "16": "images/icon/get_started16.png",
-        "32": "images/icon/get_started32.png",
-        "48": "images/icon/get_started48.png",
-        "128": "images/icon/get_started128.png"
+        "16": "images/icon/0.png",
+        "32": "images/icon/0.png",
+        "48": "images/icon/0.png",
+        "128": "images/icon/0.png"
     },
     "manifest_version": 2
 }
