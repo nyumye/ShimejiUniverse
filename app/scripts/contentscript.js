@@ -6,6 +6,9 @@ var minHeight = 100;
 //高さの下限にどれだけ数値を足すか。散らばり
 var extraHeight = 90;
 
+//ぽよぽよさせる際にどれだけ圧縮するか
+var changeValueRate = .1;
+
 var imgSrc = chrome.extension.getURL(
     [
         'images', 'shimeji', '0.png'
@@ -16,27 +19,32 @@ function setShimejiSize(img, imgHight, imgWidth){
 
 }
 
-function playPoyo(img){
-    $(img).animate(
+function playPoyo(img, changeValue){
+    if(img.is(':animated')){ return; }
+    
+    $(img).animate(//下がる
         {
-            height: '-=30px',
-            width: '+=30px'
+            height: ('-=' + changeValue + 'px'),
+            width: ('+=' + changeValue + 'px'),
+            left: ('-=' + Math.floor(changeValue/2))
         },
         {
             duration: "fast", easing: "linear",
         }
-    ).animate(
+    ).animate(//上がる
         {
-            height: '+=60px',
-            width: '-=60px'
+            height: ('+=' + changeValue * 2 + 'px'),
+            width: ('-=' + changeValue * 2 + 'px'),
+            left: ('+=' + Math.floor(changeValue))
         },
         {
             duration: "fast", easing: "linear",
         }
-    ).animate(
+    ).animate(//上がったのを戻す
         {
-            height: '-=30px',
-            width: '+=30px'
+            height: ('-=' + changeValue + 'px'),
+            width: ('+=' + changeValue + 'px'),
+            left: ('-=' + Math.floor(changeValue/2))
         },
         {
             duration: "fast", easing: "linear",
@@ -59,16 +67,20 @@ $(document).ready(function(){
         let width = img.width();
 
         //拡大比率(どれだけShimejiを縮小するか)
-        var expansionRate = (minHeight + Math.floor(Math.random() * extraHeight)) / height;
+        let expansionRate = (minHeight + Math.floor(Math.random() * extraHeight)) / height;
 
         //Shimejiのサイズを適正にし，登録
         img.css("height", Math.floor(height * expansionRate));
         img.css("width", Math.floor(width * expansionRate));
 
-        img.css("bottom", "-10px");
+        //ぽよぽよさせるときのピクセル変更値
+        let changeValue = img.height() * changeValueRate;
+
+        
         img.css('left', Math.floor(Math.random(200)*1200));
-        img.mouseover(function(){playPoyo(img)});
-        img.mouseout(function(){playPoyo(img)});
+        img.mouseover(function(){playPoyo(img, changeValue)});
+        img.mouseout(function(){playPoyo(img, changeValue)});
+        img.css("bottom", "-10px");
     });
     
 
