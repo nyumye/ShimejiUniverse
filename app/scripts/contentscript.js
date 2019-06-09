@@ -52,6 +52,46 @@ function playPoyo(img, changeValue){
     );
 }
 
+function pickShimeji(img, changeValue){
+    //imgに登録されたリスナーをすべて削除
+    img.off();
+
+    //現在行われているアニメーションをすべて消す。
+    while(img.is(':animated')){
+        img.stop();
+    }
+
+    $(img).animate(//下がる
+        {
+            height: ('-=' + changeValue + 'px'),
+            width: ('+=' + changeValue + 'px'),
+            left: ('-=' + Math.floor(changeValue/2))
+        },
+        {
+            duration: "fast", easing: "linear",
+        }
+    ).animate(//上がる
+        {
+            height: ('+=' + changeValue * 2 + 'px'),
+            width: ('-=' + changeValue * 2 + 'px'),
+            left: ('+=' + Math.floor(changeValue)),
+            bottom: ('+=' + changeValue * 2 + 'px')
+        },
+        {
+            duration: "fast", easing: "linear",
+        }
+    ).animate(//上がったのを戻す
+        {
+            height: ('-=' + changeValue + 'px'),
+            width: ('+=' + changeValue + 'px'),
+            left: ('-=' + Math.floor(changeValue/2)),
+            bottom: ('-' + ( changeValue * 2 + img.height()) + 'px')
+        },
+        {
+            duration: "normal", easing: "linear",
+        }
+    );
+}
 
 $(document).ready(function(){
     for (var i = 0; i < 20; i++) {
@@ -78,8 +118,9 @@ $(document).ready(function(){
 
         
         img.css('left', Math.floor(Math.random(200)*1200));
-        img.mouseover(function(){playPoyo(img, changeValue)});
-        img.mouseout(function(){playPoyo(img, changeValue)});
+        img.mouseover(function(){playPoyo(img, changeValue);});
+        img.mouseout(function(){playPoyo(img, changeValue);});
+        img.click(function(){pickShimeji(img, changeValue);});
         img.css("bottom", "-10px");
     });
     
