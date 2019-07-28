@@ -15,6 +15,12 @@ var numShimeji = 0;
 //生やすしめじの最大数
 var maxNumShimeji = 15;
 
+//しめじ発生から自動的に収穫するまでの時間
+var removeMinTime = 240;
+
+//しめじ自動収穫の時間のばらつき
+var extraRemoveTime = 20;
+
 
 
 //しめじの画像を適切なサイズにする
@@ -47,7 +53,7 @@ function playPoyo(img, changeValue){
         {
             height: ('+=' + changeValue * 2 + 'px'),
             width: ('-=' + changeValue * 2 + 'px'),
-            left: ('+=' + Math.floor(changeValue))
+            left: ('+=' + Math.floor(changeValue/2)*2)
         },
         {
             duration: "fast", easing: "linear",
@@ -64,6 +70,7 @@ function playPoyo(img, changeValue){
     );
 }
 
+//しめじを収穫する
 function pickShimeji(img, changeValue){
     //imgに登録されたリスナーをすべて削除
     img.off();
@@ -88,7 +95,7 @@ function pickShimeji(img, changeValue){
         {
             height: ('+=' + changeValue * 2 + 'px'),
             width: ('-=' + changeValue * 2 + 'px'),
-            left: ('+=' + Math.floor(changeValue)),
+            left: ('+=' + Math.floor(changeValue/2)*2),
             bottom: ('+=' + changeValue * 2 + 'px')
         },
         {
@@ -99,7 +106,7 @@ function pickShimeji(img, changeValue){
             height: ('-=' + changeValue + 'px'),
             width: ('+=' + changeValue + 'px'),
             left: ('-=' + Math.floor(changeValue/2)),
-            bottom: ('-' + ( changeValue * 2 + shimejiHeight) + 'px')
+            bottom: ('-' + ( changeValue * 3 + shimejiHeight) + 'px')
         },
         {
             duration: "normal", easing: "easeInCubic",
@@ -127,7 +134,7 @@ function growShimeji(img, changeValue){
         {
             height: ('+=' + (shimejiHeight + changeValue) + 'px'),
             width: ('-=' + (shimejiHeight + changeValue) + 'px'),
-            left: ('+=' + ((Math.floor(shimejiHeight/2)) + changeValue))
+            left: ('+=' + ((Math.floor(shimejiHeight/2)) + Math.floor(changeValue/2)))
         },
         {
             duration: '1000', easing: "easeOutCirc"
@@ -146,7 +153,10 @@ function growShimeji(img, changeValue){
 
 //しめじをセットする
 function putOutShimeji(){
-    var imgSrc = chrome.extension.getURL(
+    
+    numShimeji++;
+    
+    var imgSrc = chrome.runtime.getURL(
         [
             'images', 'shimeji', (Math.floor(Math.random() * 4) + 1 + '.png')
         ].join('/')
@@ -162,7 +172,7 @@ function putOutShimeji(){
         registerShimejiSize(img);
 
         //ぽよぽよさせるときのピクセル変更値
-        let changeValue = img.height() * changeValueRate;
+        let changeValue = Math.floor(img.height() * changeValueRate);
         
         //しめじをひょうじさせるぞー
         img.css('left', Math.floor(Math.random() * (window.innerWidth - img.width())));
@@ -175,16 +185,23 @@ function putOutShimeji(){
         img.mouseover(function(){ playPoyo(img, changeValue); });
         img.mouseout(function(){ playPoyo(img, changeValue); });
         img.click(function(){ pickShimeji(img, changeValue); });
+
+        setTimeout(function(){
+            pickShimeji(img, changeValue);
+        }, (removeMinTime + Math.random() * extraRemoveTime) * 1000);
         
     });
 }
 
 $(document).ready(function(){
+
+    putOutShimeji();
+
     setInterval(function(){
         //しめじ生えすぎてないか
         if(numShimeji < maxNumShimeji){
-            numShimeji++;
+            
             putOutShimeji();
         }
-    }, 3000);
+    }, 60 * 1000);
 });
