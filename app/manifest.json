@@ -4,10 +4,10 @@
     "description": "Shimeji is always beside you",
     "permissions": ["activeTab", "declarativeContent","storage"],
     "web_accessible_resources": [
+        "images/shimeji/0.png",
         "images/shimeji/1.png",
         "images/shimeji/2.png",
-        "images/shimeji/3.png",
-        "images/shimeji/4.png"
+        "images/shimeji/3.png"
     ],
     "content_scripts": [
         {

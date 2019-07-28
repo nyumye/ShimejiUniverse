@@ -180,7 +180,7 @@ chrome.storage.sync.get(searchData, function (value) {
         
         var imgSrc = chrome.runtime.getURL(
             [
-                'images', 'shimeji', (Math.floor(Math.random() * 4) + 1 + '.png')
+                'images', 'shimeji', (Math.floor(Math.random() * 4 * Number(ganShimejiExists)) + '.png')
             ].join('/')
         );
         let img = $('<img>').attr('src', imgSrc).attr('id', 'shimejiSetter').css('opacity', shimejiOpacity);
