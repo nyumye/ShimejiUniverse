@@ -6,39 +6,36 @@ $(document).ready(function(){
   //しめじの最大数
   let maxNumShimeji;
 
+  //しめじの不透明度
+  let shimejiOpacity;
+
   //しめじが自動で収穫されるか
   let isPickedAuto;
 
   //GANしめじを存在させるか
   let ganShimejiExists;
 
-  let settingData = {};
+  let searchData = {
+    shimejiOccurrenceInterval: 60,
+    maxNumShimeji: 15,
+    shimejiOpacity: 1,
+    isPickedAuto: true,
+    ganShimejiExists: true
+  };
 
 
-  chrome.storage.sync.get(
-    [
-      'shimejiOccurrenceInterval',
-      'maxNumShimeji',
-      'isPickedAuto',
-      'ganShimejiExists'
-    ], function (value) {
-      if(typeof value.shimejiOccurrenceInterval === 'undefined'){
-        //設定が保存されていないならばデフォルト値を代入する
-        shimejiOccurrenceInterval = 60;
-        maxNumShimeji = 15;
-        isPickedAuto = true;
-        ganShimejiExists = true;
-        console.log('undefinedでした');
-      }else{
-        //保存済みの設定があるならばそれを代入する。
-        shimejiOccurrenceInterval = value.shimejiOccurrenceInterval;
-        maxNumShimeji = value.maxNumShimeji;
-        isPickedAuto = value.isPickedAuto;
-        ganShimejiExists = value.ganShimejiExists;
-      }
+  chrome.storage.sync.get(searchData, function (value) {
+      
+      //保存済みの設定があるならばそれを代入する。
+      shimejiOccurrenceInterval = value.shimejiOccurrenceInterval;
+      maxNumShimeji = value.maxNumShimeji;
+      shimejiOpacity = value.shimejiOpacity;
+      isPickedAuto = value.isPickedAuto;
+      ganShimejiExists = value.ganShimejiExists;
+      
 
       //設定データのうち数値のものを配列に格納
-      let settingData = [shimejiOccurrenceInterval, maxNumShimeji];
+      let settingData = [shimejiOccurrenceInterval, maxNumShimeji, shimejiOpacity];
       console.log(settingData[0]);
       
       //スライダーを取得し，スライダーが動かされた時にspan内部の数値が変えられるようにする
@@ -60,8 +57,11 @@ $(document).ready(function(){
       document.getElementById('isPickedAuto').checked = isPickedAuto;
       document.getElementById('ganShimejiExists').checked = ganShimejiExists;
 
-      //設定を保存ボタンを押したときの処理を設定
+      //「設定を保存」ボタンを押したときの処理を設定
       document.getElementById('storeSetting').addEventListener('click', storeSetting);
+
+      //「初期値に戻す」ボタンを押したときの処理を設定
+      document.getElementById('resetSetting').addEventListener('click', function(){chrome.storage.sync.clear()});
 
       });
 
@@ -75,6 +75,10 @@ function storeSetting(){
   //しめじの最大数
   let maxNumShimeji
     = document.getElementById('maxNumShimeji').value;
+
+  //しめじの不透明度
+  let shimejiOpacity
+    = document.getElementById('shimejiOpacity').value;
 
   //しめじが自動で収穫されるか
   let isPickedAuto
@@ -91,6 +95,7 @@ function storeSetting(){
     {
       'shimejiOccurrenceInterval': shimejiOccurrenceInterval,
       'maxNumShimeji': maxNumShimeji,
+      'shimejiOpacity': shimejiOpacity,
       'isPickedAuto': isPickedAuto,
       'ganShimejiExists': ganShimejiExists
     },function(){});
