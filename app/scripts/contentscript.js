@@ -15,11 +15,7 @@ var numShimeji = 0;
 //生やすしめじの最大数
 var maxNumShimeji = 15;
 
-var imgSrc = chrome.extension.getURL(
-    [
-        'images', 'shimeji', '0.png'
-    ].join('/')
-);
+
 
 //しめじの画像を適切なサイズにする
 function registerShimejiSize(img){
@@ -150,6 +146,11 @@ function growShimeji(img, changeValue){
 
 //しめじをセットする
 function putOutShimeji(){
+    var imgSrc = chrome.extension.getURL(
+        [
+            'images', 'shimeji', (Math.floor(Math.random() * 4) + 1 + '.png')
+        ].join('/')
+    );
     let img = $('<img>').attr('src', imgSrc).attr('id', 'shimejiSetter');
 
     $('body').append(img);
@@ -185,5 +186,5 @@ $(document).ready(function(){
             numShimeji++;
             putOutShimeji();
         }
-    }, 10000);
+    }, 3000);
 });

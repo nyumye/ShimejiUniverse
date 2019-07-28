@@ -4,7 +4,10 @@
     "description": "Shimeji is always beside you",
     "permissions": ["activeTab", "declarativeContent","storage"],
     "web_accessible_resources": [
-        "images/shimeji/0.png"
+        "images/shimeji/1.png",
+        "images/shimeji/2.png",
+        "images/shimeji/3.png",
+        "images/shimeji/4.png"
     ],
     "content_scripts": [
         {
@@ -27,17 +30,18 @@
     "page_action": {
         "default_popup": "scripts/popup.html",
         "default_icon": {
-            "16": "images/icon/0.png",
-            "32": "images/icon/0.png",
-            "48": "images/icon/0.png",
-            "128": "images/icon/0.png"
+            "16": "images/icon/shimeji16.png",
+            "32": "images/icon/shimeji32.png",
+            "48": "images/icon/shimeji48.png",
+            "128": "images/icon/shimeji128.png"
         }
     },
+    "options_page": "scripts/options.html",
     "icons": {
-        "16": "images/icon/0.png",
-        "32": "images/icon/0.png",
-        "48": "images/icon/0.png",
-        "128": "images/icon/0.png"
+        "16": "images/icon/shimeji16.png",
+        "32": "images/icon/shimeji32.png",
+        "48": "images/icon/shimeji48.png",
+        "128": "images/icon/shimeji128.png"
     },
     "manifest_version": 2
 }

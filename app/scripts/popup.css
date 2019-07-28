@@ -1,0 +1,14 @@
+.range-slider {
+    display: inline-block;
+    width: 20px;
+    height: 150px;
+    padding: 0;
+}
+
+.range-slider input {
+    width: 150px;
+    height: 20px;
+    margin: 0;
+    transform-origin: 75px 75px;
+    transform: rotate(-90deg);
+  }
